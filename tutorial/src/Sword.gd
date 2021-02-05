@@ -38,5 +38,4 @@ func _on_VisibilityNotifier2D_screen_exited() -> void:
 
 # 스킬 지속시간 
 func _on_AliveTimer_timeout() -> void:
-
 	queue_free()

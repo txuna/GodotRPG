@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/art/gui/lifebar_bg.png" type="Texture" id=1]
+[ext_resource path="res://assets/art/gui/lifebar_fill.png" type="Texture" id=2]
+[ext_resource path="res://src/EnemyHealthBar.gd" type="Script" id=3]
+
+[node name="EnemyHealthBar" type="Control"]
+margin_right = 395.0
+margin_bottom = 51.0
+rect_scale = Vector2( 0.5, 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" type="TextureProgress" parent="."]
+margin_right = 396.0
+margin_bottom = 53.0
+value = 100.0
+texture_under = ExtResource( 1 )
+texture_progress = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UpdateTween" type="Tween" parent="."]

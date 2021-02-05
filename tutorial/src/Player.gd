@@ -4,19 +4,31 @@ const GRAVITY = 9.8
 const SPEED = 10
 const MAX_SPEED = 200
 const JUMP_HEIGHT = 500
-var attacking = false
-var attack_delay = false
+var attacking = false # 현재 공격중이니 다른 모션은 사용할 수 없게 -> 완전히 공격이 끊낼 수 있도록 
+var attack_delay = false # 다음 공격까지 딜레이 타이머 
+
+#var jumping = false
+
+signal change_hp 
+signal change_ep
+signal set_hp_and_ep
+
+export var health = 100
+export var ep = 300
+
+export var attack_ep = 20
+export var slash_ep = 10
 
 var motion = Vector2()
 
 const SWORD = preload("res://src/Sword.tscn")
-
 #position은 나중에 스킬 나갈때 쓰는 위치 
 
+func _ready() -> void:
+	emit_signal("set_hp_and_ep", health, ep)
+
 func _physics_process(delta):
-	
 	motion.y += GRAVITY
-	
 	# 공격모션이 중간에 끊기지 않게 하기위해 
 	if attacking == false:
 		if Input.is_action_pressed("ui_right"):
@@ -50,31 +62,72 @@ func _physics_process(delta):
 	if is_on_floor():
 		if Input.is_action_just_pressed("ui_select"):
 			motion.y -= JUMP_HEIGHT
+
 			
-	if Input.is_action_just_pressed("attack") and attack_delay == false:
-		attacking = true
-		$AnimatedSprite.play("attack")
-		var sword = SWORD.instance()
-		
-		if sign($Position2D.position.x) == 1:
-			sword.set_direction(1)
-		else:
-			sword.set_direction(-1)
-		sword.set_damage(10)
-		get_parent().add_child(sword)
-		sword.position = $Position2D.global_position
-		attack_delay = true
-		$SkillDelay.start()
+	if attack_delay == false:
+		if Input.is_action_just_pressed("attack"):
+			set_skill("attack")
 	
-	if Input.is_action_just_pressed("skill"):
-		attacking = true
-		$AnimatedSprite.play("skill")
+		if Input.is_action_just_pressed("skill"):
+			set_skill("slash")
 		
 	motion = move_and_slide(motion, Vector2.UP)
 
+func set_skill(skill_type: String) ->void:
+	var skill_instance
+	var damage
+	
+	var direction = get_skill_direction()
+	if skill_type == "attack":
+		if check_possible_skill_ep(skill_type):
+			skill_instance = SWORD.instance()
+			damage = 30
+		else:
+			print("NEED SOME EP!!")
+			return
+	elif skill_type == "slash":
+		if check_possible_skill_ep(skill_type):
+			skill_instance = SWORD.instance()
+			damage = 10
+		else:
+			print("NEED SOME EP!!")
+			return
+	#skill_instance.set_direction(1)
+	attacking = true
+	attack_delay = true
+	$AnimatedSprite.play(skill_type)
+	skill_instance.set_damage(damage)
+	get_parent().add_child(skill_instance)
+	skill_instance.position = $Position2D.global_position
+	$SkillDelay.start()
+	
+
+func get_skill_direction() -> int:
+	if sign($Position2D.position.x) == 1:
+		return 1
+	else:
+		return -1
+
+func check_possible_skill_ep(skill_type: String) -> bool:
+	if skill_type == "attack":
+		if ep - attack_ep >= 0:
+			ep -= attack_ep
+			emit_signal("change_ep", attack_ep)
+			return true
+		else:
+			return false
+	elif skill_type == "slash":
+		if ep - slash_ep >= 0:
+			ep -= slash_ep
+			emit_signal("change_ep", slash_ep)
+			return true
+		else:
+			return false
+	else:
+		return false
 
 func _on_AnimatedSprite_animation_finished() -> void:
-	if $AnimatedSprite.animation == "attack" or $AnimatedSprite.animation == "skill":
+	if $AnimatedSprite.animation == "attack" or $AnimatedSprite.animation == "slash":
 		$AnimatedSprite.stop()
 		attacking = false
 
