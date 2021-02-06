@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/art/inventory/default_inventory_background.png" type="Texture" id=1]
+[ext_resource path="res://assets/art/inventory/item_slot_default_background.png" type="Texture" id=2]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 2 )
+
+[node name="Inventory" type="Node2D"]
+position = Vector2( 412.88, 257.202 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -33.041
+margin_top = -0.0536957
+margin_right = 173.959
+margin_bottom = 111.946
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="."]
+margin_left = 75.0
+margin_top = 22.0
+margin_right = 162.0
+margin_bottom = 107.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot" type="Panel" parent="GridContainer"]
+custom_styles/panel = SubResource( 1 )
+
+[node name="Slot2" type="Panel" parent="GridContainer"]
+margin_top = 4.0
+margin_bottom = 4.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="Slot3" type="Panel" parent="GridContainer"]
+margin_top = 8.0
+margin_bottom = 8.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="Slot4" type="Panel" parent="GridContainer"]
+margin_top = 12.0
+margin_bottom = 12.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="Slot5" type="Panel" parent="GridContainer"]
+margin_top = 16.0
+margin_bottom = 16.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="Slot6" type="Panel" parent="GridContainer"]
+margin_top = 20.0
+margin_bottom = 20.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="Slot7" type="Panel" parent="GridContainer"]
+margin_top = 24.0
+margin_bottom = 24.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="Slot8" type="Panel" parent="GridContainer"]
+margin_top = 28.0
+margin_bottom = 28.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="Slot9" type="Panel" parent="GridContainer"]
+margin_top = 32.0
+margin_bottom = 32.0
+custom_styles/panel = SubResource( 1 )

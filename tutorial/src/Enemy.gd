@@ -14,7 +14,7 @@ const RIGHT = 1
 
 var motion = Vector2()
 var direction = LEFT
-
+export var attack = 30
 # CoinPosition은 몬스터가 죽었을 때 코인이 나타날 위치이다. 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,6 +27,9 @@ func _physics_process(delta: float) -> void:
 	motion.x = direction * SPEED
 	
 	motion = move_and_slide(motion, Vector2.UP)
+
+func attack():
+	return attack
 
 func take_damage(damage, crit, index):
 	hp -= damage

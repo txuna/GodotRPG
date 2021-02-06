@@ -6,14 +6,14 @@ const MAX_SPEED = 200
 const JUMP_HEIGHT = 500
 var attacking = false # 현재 공격중이니 다른 모션은 사용할 수 없게 -> 완전히 공격이 끊낼 수 있도록 
 var attack_delay = false # 다음 공격까지 딜레이 타이머 
-
+var invincible = false
 #var jumping = false
 
 signal change_hp 
 signal change_ep
 signal set_hp_and_ep
 
-export var health = 100
+export var health = 500
 export var ep = 3000
 
 export var attack_ep = 20
@@ -72,10 +72,18 @@ func _physics_process(delta):
 			set_skill("slash")
 		
 	motion = move_and_slide(motion, Vector2.UP)
+	if invincible == true:
+		return
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if collision.collider.is_in_group("enemies"):
+			invincible = true
+			$InvincibleTimer.start()
+			take_damage(collision.collider.attack())
+			return
 
 func set_skill(skill_type: String) ->void:
 	var skill_instance
-	var damage
 	var direction = get_skill_direction()
 	var player_stats = {}
 	
@@ -134,6 +142,13 @@ func check_possible_skill_ep(skill_type: String) -> bool:
 	else:
 		return false
 
+func take_damage(enemy_damage):
+	if health - enemy_damage <= 0:
+		pass
+	else:
+		health -= enemy_damage
+		emit_signal("change_hp", enemy_damage)
+
 func _on_AnimatedSprite_animation_finished() -> void:
 	if $AnimatedSprite.animation == "attack" or $AnimatedSprite.animation == "slash":
 		$AnimatedSprite.stop()
@@ -142,3 +157,7 @@ func _on_AnimatedSprite_animation_finished() -> void:
 
 func _on_SkillDelay_timeout() -> void:
 	attack_delay = false
+
+
+func _on_InvincibleTimer_timeout() -> void:
+	invincible = false

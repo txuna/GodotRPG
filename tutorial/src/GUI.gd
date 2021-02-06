@@ -50,7 +50,7 @@ func _on_Player_change_ep(ep) -> void:
 
 
 func _on_Player_change_hp(hp) -> void:
-	change_ep(hp)
+	change_hp(hp)
 
 
 func _on_Player_set_hp_and_ep(hp, ep) -> void:
