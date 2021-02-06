@@ -36,6 +36,9 @@ height = 0.0
 collision_layer = 2
 collision_mask = 9
 script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
@@ -63,6 +66,9 @@ margin_top = -45.6863
 margin_right = 347.376
 margin_bottom = 6.31371
 rect_scale = Vector2( 0.25, 0.2 )
+
+[node name="DamagePosition" type="Position2D" parent="."]
+position = Vector2( -0.25, -60 )
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="timeout" from="MovmentTimer" to="." method="_on_MovmentTimer_timeout"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

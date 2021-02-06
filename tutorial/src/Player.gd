@@ -14,7 +14,7 @@ signal change_ep
 signal set_hp_and_ep
 
 export var health = 100
-export var ep = 300
+export var ep = 3000
 
 export var attack_ep = 20
 export var slash_ep = 10
@@ -76,27 +76,35 @@ func _physics_process(delta):
 func set_skill(skill_type: String) ->void:
 	var skill_instance
 	var damage
-	
 	var direction = get_skill_direction()
-	if skill_type == "attack":
-		if check_possible_skill_ep(skill_type):
+	var player_stats = {}
+	
+	if check_possible_skill_ep(skill_type):
+		if skill_type == "attack":
 			skill_instance = SWORD.instance()
-			damage = 30
-		else:
-			print("NEED SOME EP!!")
-			return
-	elif skill_type == "slash":
-		if check_possible_skill_ep(skill_type):
+			player_stats = {
+				"min_attack" : 200,
+				"max_attack" : 500,
+				"crit" : 100, 
+				"crit_damage" : 2
+			}
+			
+		elif skill_type == "slash":
 			skill_instance = SWORD.instance()
-			damage = 10
-		else:
-			print("NEED SOME EP!!")
-			return
+			player_stats = {
+				"min_attack" : 100,
+				"max_attack" : 400,
+				"crit" : 20, 
+				"crit_damage" : 2
+			}
+	else:
+		return
+	
 	#skill_instance.set_direction(1)
 	attacking = true
 	attack_delay = true
 	$AnimatedSprite.play(skill_type)
-	skill_instance.set_damage(damage)
+	skill_instance.set_damage(player_stats)
 	get_parent().add_child(skill_instance)
 	skill_instance.position = $Position2D.global_position
 	$SkillDelay.start()

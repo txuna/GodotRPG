@@ -30,6 +30,7 @@ func change_hp(hp):
 	health_number.text = str(health_bar.value)
 	health_tween.interpolate_property(health_bar, "value", current_hp, health_bar.value, 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	health_tween.start()
+	yield(health_tween, "tween_all_completed")
 	
 	
 func change_ep(ep):
@@ -38,7 +39,7 @@ func change_ep(ep):
 	ep_number.text = str(ep_bar.value)
 	ep_tween.interpolate_property(ep_bar, "value", current_ep, ep_bar.value, 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	ep_tween.start()
-
+	yield(ep_tween, "tween_all_completed")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
 #	pass

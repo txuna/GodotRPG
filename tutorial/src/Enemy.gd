@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-export var hp = 100
+export var hp = 1000
 
 
 
@@ -8,6 +8,7 @@ const GRAVITY = 9.8
 const SPEED = 50
 const MAX_SPEED = 200
 const COIN = preload("res://src/Coin.tscn")
+const DAMAGE_SKIN = preload("res://src/Damage.tscn")
 const LEFT = -1
 const RIGHT = 1
 
@@ -27,9 +28,15 @@ func _physics_process(delta: float) -> void:
 	
 	motion = move_and_slide(motion, Vector2.UP)
 
-func take_damage(damage):
+func take_damage(damage, crit, index):
 	hp -= damage
+	var damage_skin = DAMAGE_SKIN.instance()
+	damage_skin.rect_position = $DamagePosition.position
+	damage_skin.rect_position.y = $DamagePosition.position.y * index
+	add_child(damage_skin)
+	damage_skin.show_value(damage, crit)
 	if hp <= 0:
+		$EnemyHealthBar.take_damage(damage)
 		$AnimatedSprite.play("dead")
 	else:
 		$EnemyHealthBar.take_damage(damage)
