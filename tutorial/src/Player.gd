@@ -85,7 +85,7 @@ func set_skill(skill_type: String) ->void:
 			player_stats = {
 				"min_attack" : 200,
 				"max_attack" : 500,
-				"crit" : 100, 
+				"crit" : 40, 
 				"crit_damage" : 2
 			}
 			

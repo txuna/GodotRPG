@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-export var hp = 1000
+export var hp = 10000
 
 
 
