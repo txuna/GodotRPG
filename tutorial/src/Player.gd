@@ -23,8 +23,8 @@ const DAMAGE_SKIN = preload("res://src/Damage.tscn")
 export var player_state = {
 	"max_hp" : 1000,
 	"current_hp" : 1000,
-	"max_ep" : 500,
-	"current_ep" : 500,
+	"max_ep" : 1000,
+	"current_ep" : 1000,
 	"coin" : 0,
 	"min_attack" : 100,
 	"max_attack" : 400,
@@ -61,7 +61,17 @@ export var player_inventory = {
 				"current_hp" : 20,
 			},
 			"kindof" : "consumption",
-		}
+			"numberof" : 4,
+		},
+		{
+			"item_name" : "Blue Potion",
+			"description" : "this is blue potion",
+			"plus_state" : {
+				"current_ep" : 20,
+			},
+			"kindof" : "consumption",
+			"numberof" : 3,
+		},
 	]
 }
 
