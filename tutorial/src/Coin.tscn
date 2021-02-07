@@ -17,7 +17,9 @@ animations = [ {
 [sub_resource type="CapsuleShape2D" id=2]
 height = 4.37395
 
-[node name="Coin" type="KinematicBody2D"]
+[node name="Coin" type="KinematicBody2D" groups=[
+"coins",
+]]
 collision_layer = 4
 collision_mask = 9
 script = ExtResource( 5 )

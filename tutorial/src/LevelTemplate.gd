@@ -36,7 +36,8 @@ func _on_EnemySpawn_timeout() -> void:
 	enemy.position.x = rand_range($EnemySpawnPosition.global_position.x - 500, $EnemySpawnPosition.global_position.x + 200)
 	#enemy.position = $EnemySpawnPosition.global_position
 	get_tree().call_group("enemies", "connect", enemy)
-	get_parent().add_child(enemy)
+	#get_parent().add_child(enemy)
+	add_child(enemy)
 
 
 func magic():

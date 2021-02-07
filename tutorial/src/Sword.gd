@@ -9,7 +9,7 @@ var attacked_enemy_number = 0
 
 const ENEMY_NUMER = 1 # 한번에 타격 가능한 몬스터 수 
 const SKILL_DAMAGE_PERCENT = 80
-const SKILL_NUMBER_OF = 3
+const SKILL_NUMBER_OF = 30
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
@@ -35,6 +35,7 @@ func set_damage(stats) -> void:
 func _on_Sword_body_entered(body: Node) -> void:
 	if "Enemy" in body.name:
 		if attacked_enemy_number >= ENEMY_NUMER:
+			queue_free()
 			return
 		attacked_enemy_number+=1
 		for i in range(SKILL_NUMBER_OF):
@@ -49,7 +50,10 @@ func _on_Sword_body_entered(body: Node) -> void:
 				crit = false
 			body.take_damage(damage, crit, i)
 
-	queue_free()
+	# 날라가는 스킬의 경우 한명 맞고 그 뒤로도 날라갈 수 있으니 날라가지 않는 스킬의 경우 스킬 alivetimer랑 attacked_enemy_number로 체크 
+	# 날라가는 스킬의 경우에도 똑같네 
+	return
+	#queue_free()
 
 
 func _on_VisibilityNotifier2D_screen_exited() -> void:
